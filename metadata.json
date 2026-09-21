@@ -1,0 +1,6 @@
+{
+  "name": "Dating App Companion",
+  "description": "An intelligent dating app companion that checks local weather to adapt human-like dating advice, conversation starters, and date plans.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

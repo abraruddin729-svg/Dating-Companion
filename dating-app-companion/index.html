@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dating App Companion</title>
+  <meta name="description" content="An intelligent dating app companion that checks local weather to adapt human-like dating advice, conversation starters, and date plans." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="currentColor">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title-row">
+              <h1>Dating Companion</h1>
+              <span class="badge badge-pulse">
+                <span class="pulse-dot"></span>
+                Weather-Aware
+              </span>
+            </div>
+            <p>Adaptive date plans & human-like conversational queries</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button id="location-pill" class="location-pill" title="Click to change active city">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span id="current-location-text">Hyderabad, IN</span>
+            <span id="header-weather-temp" class="weather-temp-badge">...</span>
+          </button>
+
+          <button id="reset-btn" class="btn-icon" title="Reset conversation">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Chat Window -->
+    <main class="chat-main">
+      <div class="chat-wrapper">
+        <!-- Live Status Bar -->
+        <div class="status-banner">
+          <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span>Active persona: Checks local weather using <code>get_current_weather</code> first</span>
+          </div>
+          <button id="change-loc-btn" class="text-link">Change City</button>
+        </div>
+
+        <!-- Messages Stream -->
+        <div id="messages-container" class="messages-container"></div>
+
+        <!-- Starter Chips -->
+        <div id="starter-prompts" class="starter-prompts">
+          <p class="starters-label">Quick suggestions for <span id="starters-city">Hyderabad, IN</span>:</p>
+          <div class="starters-grid">
+            <button class="starter-card" data-prompt="Can you recommend a romantic first date idea suited to today's local weather?">
+              <span class="starter-icon">🌦️</span>
+              <div class="starter-info">
+                <strong>Weather-Adaptive Date</strong>
+                <small>Tailored to current temperature & skies</small>
+              </div>
+            </button>
+            <button class="starter-card" data-prompt="What outfit should I wear on a casual date today given the current forecast?">
+              <span class="starter-icon">👗</span>
+              <div class="starter-info">
+                <strong>What to Wear</strong>
+                <small>Comfortable & stylish recommendations</small>
+              </div>
+            </button>
+            <button class="starter-card" data-prompt="Give me 3 charming, effortless icebreaker openers that reference today's weather.">
+              <span class="starter-icon">💬</span>
+              <div class="starter-info">
+                <strong>Witty Icebreakers</strong>
+                <small>Natural & lighthearted openers</small>
+              </div>
+            </button>
+            <button class="starter-card" data-prompt="Plan a spontaneous evening date with dinner and drinks fitting tonight's conditions.">
+              <span class="starter-icon">🍸</span>
+              <div class="starter-info">
+                <strong>Evening Hangout</strong>
+                <small>Breezy rooftops or cozy indoor lounges</small>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Input Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <form id="chat-form" class="chat-form">
+          <button type="button" id="inline-loc-btn" class="inline-loc-pill" title="Change City">
+            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span id="footer-location-text">Hyderabad, IN</span>
+          </button>
+          <input
+            id="chat-input"
+            type="text"
+            placeholder="Ask for date plans, icebreakers, or what to wear..."
+            autocomplete="off"
+            required
+          />
+          <button type="submit" id="send-btn" class="btn-send" title="Send message">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="m22 2-7 20-4-9-9-4Z"/>
+              <path d="M22 2 11 13"/>
+            </svg>
+          </button>
+        </form>
+        <div class="footer-caption">
+          <span>Powered by Gemini & <code>get_current_weather</code> tool</span>
+          <span>Local weather adapts conversation and date options</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Location Modal -->
+    <div id="location-modal" class="modal-backdrop hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Select Your City</h3>
+          <button id="close-modal-btn" class="btn-icon">✕</button>
+        </div>
+        <div class="modal-body">
+          <form id="custom-city-form" class="custom-city-form">
+            <label for="custom-city-input">Enter City & Country Code</label>
+            <div class="input-with-btn">
+              <input id="custom-city-input" type="text" placeholder="e.g. Hyderabad, IN or London, UK" />
+              <button type="submit" class="btn-primary">Set</button>
+            </div>
+          </form>
+
+          <div class="preset-section">
+            <span class="preset-title">Popular Dating Hubs</span>
+            <div class="preset-grid">
+              <button class="btn-preset" data-city="Hyderabad, IN">Hyderabad, IN</button>
+              <button class="btn-preset" data-city="London, UK">London, UK</button>
+              <button class="btn-preset" data-city="New York, US">New York, US</button>
+              <button class="btn-preset" data-city="Paris, FR">Paris, FR</button>
+              <button class="btn-preset" data-city="Tokyo, JP">Tokyo, JP</button>
+              <button class="btn-preset" data-city="Chicago, US">Chicago, US</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
